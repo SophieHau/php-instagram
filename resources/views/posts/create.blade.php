@@ -2,35 +2,44 @@
 
 @section('content')
 <div class="container">
-    <div class="row">
-        <div class="col-3 p-5">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/1200px-Instagram_logo_2016.svg.png" style="height: 170px" class="rounded-circle">
-        </div>
-        <div class="col-9 pt-5">
-            <div class="d-flex justify-content-between align-items-baseline">
-                <h1>{{ $user->username }}</h1>
-                <a href="#">Add new post</a>
+    <form action="/p" enctype="multipart/form-data" method="post">
+        <div class="row">
+            <div class="col-8 offset-2">
+                <div class="row">
+                    <h1>Add new post</h1>
+                </div>
+                <div class="form-group row">
+                @csrf
+                    <label for="caption" class="col-md-4 col-form-label">Post Caption</label>
+
+                    <input 
+                        id="caption" 
+                        type="text" 
+                        class="form-control @error('caption') is-invalid @enderror"
+                        name="caption" 
+                        value="{{ old('caption') }}" 
+                        required autocomplete="caption" 
+                        autofocus
+                    >
+
+                    @error('caption')
+                            <strong>{{ $message }}</strong>
+                    @enderror
+                </div>
+                <div class="row">
+                    <label for="image" class="col-md-4 col-form-label">Post Image</label>
+
+                    <input type="file", class="form-control-file" id="image" name="image">
+
+                    @error('image')
+                            <strong>{{ $message }}</strong>
+                    @enderror
+                </div>
+                <div class="row pt-4">
+                    <button class="btn btn-primary">Add New Post</button>
+                </div>
             </div>
-            <div class="d-flex">
-                <div class="pr-5"><strong>155</strong> posts</div>
-                <div class="pr-5"><strong>235</strong> followers</div>
-                <div class="pr-5"><strong>215</strong> following</div>
-            </div>
-            <div class="pt-4 font-weight-bold   ">{{ $user->profile->title }}</div>
-            <div>{{ $user->profile->description }}</div>
-            <div><a href="//{{ $user->profile->url }}">{{ $user->profile->url}}</a></div>
         </div>
-    </div>
-    <div class="row pt-5">
-        <div class="col-4">
-            <img src="https://thumbs.dreamstime.com/b/spring-flowers-blue-crocuses-drops-water-backgro-background-tracks-rain-113784722.jpg" class="w-100">
-        </div>
-        <div class="col-4">    
-            <img src="https://thumbs.dreamstime.com/b/spring-flowers-blue-crocuses-drops-water-backgro-background-tracks-rain-113784722.jpg" class="w-100">
-        </div>
-        <div class="col-4">    
-            <img src="https://thumbs.dreamstime.com/b/spring-flowers-blue-crocuses-drops-water-backgro-background-tracks-rain-113784722.jpg" class="w-100">
-        </div>
-    </div>
+    </form>
 </div>
 @endsection
